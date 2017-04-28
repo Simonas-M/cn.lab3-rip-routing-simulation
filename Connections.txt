@@ -1,0 +1,50 @@
+{
+  "Connections":
+  [
+    {
+      "From": "PC1",
+      "To": "Node1",
+      "Weight": 1
+    },
+    {
+      "From": "Node1",
+      "To": "Node2",
+      "Weight": 3
+    },
+    {
+      "From": "Node3",
+      "To": "Node1",
+      "Weight": 2
+    },
+    {
+      "From": "Node2",
+      "To": "Node3",
+      "Weight": 4
+    },
+    {
+      "From": "Node2",
+      "To": "Node4",
+      "Weight": 3
+    },
+    {
+      "From": "Node4",
+      "To": "PC3",
+      "Weight": 1
+    },
+    {
+      "From": "Node4",
+      "To": "Node5",
+      "Weight": 5
+    },
+    {
+      "From": "Node5",
+      "To": "Node2",
+      "Weight": 7
+    },
+    {
+      "From": "Node5",
+      "To": "PC2",
+      "Weight": 6
+    }
+  ]
+}
