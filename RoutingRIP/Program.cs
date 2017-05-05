@@ -17,8 +17,11 @@ namespace RoutingRIP
             GraphGenerator graphGen = new GraphGenerator();
             string graphString = graph.ToGraphVizString();
 
-            using (Image image = Image.FromStream(new MemoryStream(graphGen.GenerateGraph(graphString))) )
+            GraphView form = new GraphView();
+            form.Show();
+            using (Image image = Image.FromStream(new MemoryStream(graphGen.GenerateGraph(graphString))))
             {
+                form.UpdateImage(image);
                 image.Save(@"C:\Users\Simonas\Desktop\output.png", System.Drawing.Imaging.ImageFormat.Png);
             }
         }
