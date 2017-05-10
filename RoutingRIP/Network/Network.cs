@@ -2,16 +2,17 @@
 using RoutingRIP.JSON;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
 namespace RoutingRIP
 {
-    class Network
+    class NetworkContainer
     {
         private List<NetworkNode> _nodes = new List<NetworkNode>();
 
-        public Network(string jsonString)
+        public NetworkContainer(string jsonString)
         {
             try
             {
@@ -35,18 +36,17 @@ namespace RoutingRIP
             }
         }
 
+        public void TurnNodeFiveOffline()
+        {
+            _nodes[4].ChangeMode(true);
+        }
+
         public void Update()
         {
             foreach (NetworkNode node in _nodes)
             {
                 node.PingAll();
             }
-            Thread.Sleep(1000);
-            foreach (NetworkNode node in _nodes)
-            {
-                node.PongAll();
-            }
-            _nodes[7].ChangeMode(true);
         }
 
         public string ToGraphVizString()
@@ -54,14 +54,14 @@ namespace RoutingRIP
             List<Link> usedLinks = new List<Link>();
             StringBuilder graphviz = new StringBuilder();
             graphviz.Append("graph Nodes {");
-            foreach (NetworkNode node in _nodes)
+            foreach (NetworkNode node in _nodes.Where(x => x.Pong()))
             {
-                foreach (NetworkNode connection in node.GetConnectedNodes())
+                foreach (NetworkNodeConnection connection in node.GetConnectedNodes().Where(x => x.Through == null))
                 {
-                    if (!usedLinks.Exists(x => (x.From == connection.Name && x.To == node.Name)))
+                    if (!usedLinks.Exists(x => (x.From == connection.To.Name && x.To == node.Name)))
                     {
-                        graphviz.Append(Environment.NewLine + node.Name + "--" + connection.Name);
-                        usedLinks.Add(new Link { From = node.Name, To = connection.Name });
+                        graphviz.Append(Environment.NewLine + node.Name + "--" + connection.To.Name);
+                        usedLinks.Add(new Link { From = node.Name, To = connection.To.Name });
                     }
                 }
             }

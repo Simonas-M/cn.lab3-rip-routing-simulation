@@ -17,7 +17,7 @@ namespace RoutingRIP
             GraphGenerator graphGen = new GraphGenerator();
             //string graphString = graph.ToGraphVizString();
 
-            Network network = new Network(jsonNodes);
+            NetworkContainer network = new NetworkContainer(jsonNodes);
             string graphString = network.ToGraphVizString();
 
             GraphView form = new GraphView();
@@ -30,8 +30,18 @@ namespace RoutingRIP
 
             network.Update();
             network.Update();
+            network.Update();
+            network.Update();
+            network.Update();
+            network.TurnNodeFiveOffline();
+            network.Update();
+            network.Update();
+            network.Update();
+            network.Update();
+            network.Update();
+            network.Update();
             graphString = network.ToGraphVizString();
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
 
             using (Image image = Image.FromStream(new MemoryStream(graphGen.GenerateGraph(graphString))))
             {
