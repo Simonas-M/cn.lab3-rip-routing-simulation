@@ -6,6 +6,6 @@ namespace RoutingRIP
     {
         public string Name { get; set; }
 
-        public List<NodeLink> Connections = new List<NodeLink>();
+        public List<GraphNodeLink> Connections = new List<GraphNodeLink>();
     }
 }

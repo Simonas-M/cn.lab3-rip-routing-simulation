@@ -62,7 +62,9 @@
     <Compile Include="JSON\GraphJSON.cs" />
     <Compile Include="JSON\Link.cs" />
     <Compile Include="JSON\Node.cs" />
-    <Compile Include="Graph\NodeLink.cs" />
+    <Compile Include="Graph\GraphNodeLink.cs" />
+    <Compile Include="Network\Network.cs" />
+    <Compile Include="Network\NetworkNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

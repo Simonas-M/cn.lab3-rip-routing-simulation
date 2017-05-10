@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoutingRIP
 {
-    class NodeLink
+    class GraphNodeLink
     {
         public GraphNode To { get; set; }
 

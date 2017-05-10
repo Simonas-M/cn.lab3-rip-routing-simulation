@@ -3,7 +3,6 @@ using RoutingRIP.JSON;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 
 namespace RoutingRIP
 {
@@ -26,8 +25,8 @@ namespace RoutingRIP
                 {
                     GraphNode from = Nodes.Find(x => x.Name == connection.From);
                     GraphNode to = Nodes.Find(x => x.Name == connection.To);
-                    from.Connections.Add(new NodeLink { To = to, Weight = connection.Weight });
-                    to.Connections.Add(new NodeLink { To = from, Weight = connection.Weight });
+                    from.Connections.Add(new GraphNodeLink { To = to, Weight = connection.Weight });
+                    to.Connections.Add(new GraphNodeLink { To = from, Weight = connection.Weight });
                 }
             }
             catch(Exception)
