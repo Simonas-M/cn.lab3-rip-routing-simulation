@@ -1,6 +1,6 @@
 ﻿namespace RoutingRIP
 {
-    class NetworkNodeConnection
+    public class NetworkNodeConnection
     {
         public int HopCount { get; set; }
 

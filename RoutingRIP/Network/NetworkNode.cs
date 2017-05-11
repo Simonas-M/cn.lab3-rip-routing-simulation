@@ -4,13 +4,15 @@ using System.Linq;
 
 namespace RoutingRIP
 {
-    class NetworkNode
+    public class NetworkNode
     {
         public string Name;
         public Guid Id;
         private bool _isOffline = false;
         private List<NetworkNodeConnection> _connectedNodes = new List<NetworkNodeConnection>();
         private List<NetworkNode> _failingNodes = new List<NetworkNode>();
+
+        public List<NetworkNodeConnection> ConnectedNodes { get { return _connectedNodes; } }
 
         public NetworkNode(string name, bool IsOffline = false)
         {
@@ -32,7 +34,12 @@ namespace RoutingRIP
         public void ConnectNode(NetworkNode node)
         {
             if (!_connectedNodes.Any(x => x.HopCount == 1 && x.To == node))
-                _connectedNodes.Add(new NetworkNodeConnection {HopCount = 1, To = node });
+                _connectedNodes.Add(new NetworkNodeConnection { HopCount = 1, To = node });
+        }
+
+        public void DisconnectNode(NetworkNode node)
+        {
+            _connectedNodes.RemoveAll(x => (x.HopCount == 1 && x.To == node) || x.Through == node);
         }
 
         public List<NetworkNodeConnection> GetConnectedNodes()
@@ -47,10 +54,10 @@ namespace RoutingRIP
 
             Console.WriteLine(Name + " got pinged by " + pinger.Name);
 
-            if(!_connectedNodes.Any(x => x.To == pinger))
+            if (!_connectedNodes.Any(x => x.To == pinger))
                 ConnectNode(pinger);
 
-            _connectedNodes.RemoveAll(x => x.Through == pinger);
+            _connectedNodes.RemoveAll(x => x.Through == pinger && !pingerNodes.Contains(x));
 
             foreach (var node in pingerNodes)
             {
@@ -62,7 +69,7 @@ namespace RoutingRIP
                     myNode.HopCount = node.HopCount + 1;
                     myNode.Through = pinger;
                 }
-                if(!_connectedNodes.Any(x => x.To == node.To))
+                if (!_connectedNodes.Any(x => x.To == node.To))
                     _connectedNodes.Add(new NetworkNodeConnection { HopCount = node.HopCount + 1, To = node.To, Through = pinger });
             }
         }
@@ -75,13 +82,13 @@ namespace RoutingRIP
                 if (_failingNodes.Contains(neighborNode))
                     _failingNodes.Remove(neighborNode);
                 neighborNode.GotPinged(this, _connectedNodes);
-            }                
+            }
             else
             {
                 _connectedNodes.RemoveAll(x => x.To == neighborNode || x.Through == neighborNode);
                 if (!_failingNodes.Contains(neighborNode))
                     _failingNodes.Add(neighborNode);
-            }                
+            }
         }
 
         public void PingAll()

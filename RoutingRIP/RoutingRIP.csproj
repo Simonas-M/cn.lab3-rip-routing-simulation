@@ -57,12 +57,9 @@
     <Compile Include="GraphView.Designer.cs">
       <DependentUpon>GraphView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Graph\Graph.cs" />
-    <Compile Include="Graph\GraphNode.cs" />
     <Compile Include="JSON\GraphJSON.cs" />
     <Compile Include="JSON\Link.cs" />
     <Compile Include="JSON\Node.cs" />
-    <Compile Include="Graph\GraphNodeLink.cs" />
     <Compile Include="Network\Network.cs" />
     <Compile Include="Network\NetworkNode.cs" />
     <Compile Include="Network\NetworkNodeConnection.cs" />
