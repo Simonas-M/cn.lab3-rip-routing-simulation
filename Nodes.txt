@@ -29,48 +29,39 @@
   "Connections":[
     {
       "From": "PC1",
-      "To": "Node1",
-      "Weight": 1
+      "To": "Node1"
     },
     {
       "From": "Node1",
-      "To": "Node2",
-      "Weight": 3
+      "To": "Node2"
     },
     {
       "From": "Node3",
-      "To": "Node1",
-      "Weight": 2
+      "To": "Node1"
     },
     {
       "From": "Node2",
-      "To": "Node3",
-      "Weight": 4
+      "To": "Node3"
     },
     {
       "From": "Node2",
-      "To": "Node4",
-      "Weight": 3
+      "To": "Node4"
     },
     {
       "From": "Node4",
-      "To": "PC3",
-      "Weight": 1
+      "To": "PC3"
     },
     {
       "From": "Node4",
-      "To": "Node5",
-      "Weight": 5
+      "To": "Node5"
     },
     {
       "From": "Node5",
-      "To": "Node2",
-      "Weight": 7
+      "To": "Node2"
     },
     {
       "From": "Node5",
-      "To": "PC2",
-      "Weight": 6
+      "To": "PC2"
     }
   ]
 }
