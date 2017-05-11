@@ -10,7 +10,7 @@ namespace RoutingRIP
         public Guid Id;
         private bool _isOffline = false;
         private List<NetworkNodeConnection> _connectedNodes = new List<NetworkNodeConnection>();
-        //private Dictionary<NetworkNodeConnection, int> _failingNodes = new Dictionary<NetworkNodeConnection, int>();
+        private List<NetworkNode> _failingNodes = new List<NetworkNode>();
 
         public NetworkNode(string name, bool IsOffline = false)
         {
@@ -50,6 +50,8 @@ namespace RoutingRIP
             if(!_connectedNodes.Any(x => x.To == pinger))
                 ConnectNode(pinger);
 
+            _connectedNodes.RemoveAll(x => x.Through == pinger);
+
             foreach (var node in pingerNodes)
             {
                 if (node.To == this || node.Through == this)
@@ -63,64 +65,22 @@ namespace RoutingRIP
                 if(!_connectedNodes.Any(x => x.To == node.To))
                     _connectedNodes.Add(new NetworkNodeConnection { HopCount = node.HopCount + 1, To = node.To, Through = pinger });
             }
-            //foreach(var node in _connectedNodes)
-            //{
-            //    if (!pingerNodes.Any(x => x.To == node.To || node.To == pinger))
-            //    {
-            //        if (!_failingNodes.ContainsKey(node))
-            //            _failingNodes.Add(node, 1);
-            //        else
-            //            _failingNodes[node]++;
-            //        Console.WriteLine("failing node: from" + Name + " to " + node.To.Name);
-            //    }
-            //    else
-            //    {
-            //        if (_failingNodes.ContainsKey(node))
-            //            _failingNodes.Remove(node);
-            //        Console.WriteLine("not failing after all: from" + Name + " to " + node.To.Name);
-            //    }
-            //}
-        }
-
-        public void UnreachableNodeDetected(NetworkNode reporter, NetworkNode unreachableNode)
-        {
-            if (!_connectedNodes.Any(x => x.To == unreachableNode || x.Through == unreachableNode))
-                return;//Jei nera kelio kuris eina i unreachable arba per unreachable tai gryztama
-            else
-            {
-                var badNode = _connectedNodes.Where(x => x.To == unreachableNode).SingleOrDefault();
-                if(!Equals(badNode, default(NetworkNode)))
-                    _connectedNodes.Remove(badNode);//Jei yra toks kelias kuris veda i unreachable tai ji istrina
-                badNode = _connectedNodes.Where(x => x.Through == unreachableNode).SingleOrDefault();//PATAISYT JEI YRA DAUGIAU NEGU VIENAS
-                if (!Equals(badNode, default(NetworkNode)))
-                {
-                    _connectedNodes.Remove(badNode);//Jei yra toks kelias kuris eina per unreachable tai ji istrina ir paskelbia visiem kaimynam
-                    foreach (var node in _connectedNodes.Where(x => x.HopCount == 1 && x.To != badNode.To))
-                    {
-                        node.To.UnreachableNodeDetected(this, badNode.To);
-                    }
-                }
-            }
-            foreach (var node in _connectedNodes.Where(x => x.HopCount == 1 && x.To != unreachableNode && x.To != reporter).ToList())
-            {
-                node.To.UnreachableNodeDetected(this, unreachableNode);
-            }
         }
 
         public void Ping(NetworkNode neighborNode)
         {
             Console.WriteLine(Name + " is pinging " + neighborNode.Name);
-            if(neighborNode.Pong())
+            if (neighborNode.Pong())
+            {
+                if (_failingNodes.Contains(neighborNode))
+                    _failingNodes.Remove(neighborNode);
                 neighborNode.GotPinged(this, _connectedNodes);
+            }                
             else
             {
-                _connectedNodes.Remove(_connectedNodes.Where(x => x.To == neighborNode).Single());
-                Console.WriteLine(Name + " deleted " + neighborNode.Name);
-                var connectedNodes = _connectedNodes.Where(x => x.HopCount == 1 && x.To != neighborNode).ToList();
-                foreach (var node in connectedNodes)
-                {
-                    node.To.UnreachableNodeDetected(this, neighborNode);
-                }
+                _connectedNodes.RemoveAll(x => x.To == neighborNode || x.Through == neighborNode);
+                if (!_failingNodes.Contains(neighborNode))
+                    _failingNodes.Add(neighborNode);
             }                
         }
 

@@ -36,9 +36,9 @@ namespace RoutingRIP
             }
         }
 
-        public void TurnNodeFiveOffline()
+        public void TurnNodeFiveOffline(bool value)
         {
-            _nodes[4].ChangeMode(true);
+            _nodes[5].ChangeMode(value);
         }
 
         public void Update()
