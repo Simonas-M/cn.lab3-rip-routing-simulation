@@ -33,7 +33,14 @@ namespace RoutingRIP
             network.Update();
             network.Update();
             network.Update();
-            network.TurnNodeFiveOffline();
+            network.TurnNodeFiveOffline(true);
+            network.Update();
+            network.Update();
+            network.Update();
+            network.Update();
+            network.Update();
+            network.Update();
+            network.TurnNodeFiveOffline(false);
             network.Update();
             network.Update();
             network.Update();
