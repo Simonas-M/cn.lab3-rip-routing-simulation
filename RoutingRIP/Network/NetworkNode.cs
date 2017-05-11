@@ -91,7 +91,7 @@ namespace RoutingRIP
                 var badNode = _connectedNodes.Where(x => x.To == unreachableNode).SingleOrDefault();
                 if(!Equals(badNode, default(NetworkNode)))
                     _connectedNodes.Remove(badNode);//Jei yra toks kelias kuris veda i unreachable tai ji istrina
-                badNode = _connectedNodes.Where(x => x.Through == unreachableNode).SingleOrDefault();
+                badNode = _connectedNodes.Where(x => x.Through == unreachableNode).SingleOrDefault();//PATAISYT JEI YRA DAUGIAU NEGU VIENAS
                 if (!Equals(badNode, default(NetworkNode)))
                 {
                     _connectedNodes.Remove(badNode);//Jei yra toks kelias kuris eina per unreachable tai ji istrina ir paskelbia visiem kaimynam
