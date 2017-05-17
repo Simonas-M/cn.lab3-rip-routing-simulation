@@ -74,6 +74,23 @@ namespace RoutingRIP
             }
         }
 
+        public void SendData(NetworkNode nodeTo, string data)
+        {
+            Console.WriteLine(Name + " received data");
+            if(nodeTo == this)
+                Console.WriteLine(Name + ": I received data which was sent to me - " + data);
+            else
+            {
+                if (_connectedNodes.Any(x => x.To == nodeTo))
+                    if(_connectedNodes.Single(x => x.To == nodeTo).HopCount != 1)
+                        _connectedNodes.Single(x => x.To == nodeTo).Through.SendData(nodeTo, data);
+                    else
+                        _connectedNodes.Single(x => x.To == nodeTo).To.SendData(nodeTo, data);
+                else
+                    throw new InvalidOperationException("Currently there is no path between " + Name + " and " + nodeTo.Name);
+            }            
+        }
+
         public void Ping(NetworkNode neighborNode)
         {
             Console.WriteLine(Name + " is pinging " + neighborNode.Name);

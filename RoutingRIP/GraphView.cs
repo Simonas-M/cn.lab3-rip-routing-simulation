@@ -145,5 +145,12 @@ namespace RoutingRIP
                 TxtLinkTo.ForeColor = Color.Gray;
             }
         }
+
+        private void BtnSend_Click(object sender, EventArgs e)
+        {
+            try { Network.SendData("PC1", "PC3", "Labas!"); }
+            catch (ArgumentException ex) { MessageBox.Show(ex.Message); }
+            catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace RoutingRIP
             this.LblLink = new System.Windows.Forms.Label();
             this.TxtLinkFrom = new System.Windows.Forms.TextBox();
             this.TxtLinkTo = new System.Windows.Forms.TextBox();
+            this.BtnSend = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.graphImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,6 +162,19 @@ namespace RoutingRIP
             this.TxtLinkTo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TxtLinkTo_MouseClick);
             this.TxtLinkTo.Leave += new System.EventHandler(this.TxtLinkTo_Leave);
             // 
+            // BtnSend
+            // 
+            this.BtnSend.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.BtnSend.Font = new System.Drawing.Font("Consolas", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.BtnSend.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnSend.Location = new System.Drawing.Point(519, 88);
+            this.BtnSend.Name = "BtnSend";
+            this.BtnSend.Size = new System.Drawing.Size(233, 70);
+            this.BtnSend.TabIndex = 1;
+            this.BtnSend.Text = "SEND";
+            this.BtnSend.UseVisualStyleBackColor = true;
+            this.BtnSend.Click += new System.EventHandler(this.BtnSend_Click);
+            // 
             // GraphView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -175,6 +189,7 @@ namespace RoutingRIP
             this.Controls.Add(this.BtnAddLink);
             this.Controls.Add(this.BtnDeleteNode);
             this.Controls.Add(this.BtnDeleteLink);
+            this.Controls.Add(this.BtnSend);
             this.Controls.Add(this.BtnNext);
             this.Controls.Add(this.graphImage);
             this.Name = "GraphView";
@@ -198,5 +213,6 @@ namespace RoutingRIP
         private System.Windows.Forms.Label LblLink;
         private System.Windows.Forms.TextBox TxtLinkFrom;
         private System.Windows.Forms.TextBox TxtLinkTo;
+        private Button BtnSend;
     }
 }
