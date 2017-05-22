@@ -10,6 +10,7 @@ namespace RoutingRIP
         private Network Network;
         GraphGenerator graphGen = new GraphGenerator();
         RoutingTableView tableView = new RoutingTableView();
+        private bool Initialize = true;
 
         public GraphView(Network network)
         {
@@ -44,11 +45,14 @@ namespace RoutingRIP
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            Network.Update();
+            if(!Initialize)
+                Network.Update();
             using (Image image = Image.FromStream(new MemoryStream(graphGen.GenerateGraph(Network.ToGraphVizString()))))
             {
                 UpdateImage(image);
             }
+            if (Initialize)
+                Initialize = false;
         }
 
         private void GraphUpdated(object sender, EventArgs e)
