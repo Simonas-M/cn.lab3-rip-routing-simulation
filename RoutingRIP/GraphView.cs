@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RoutingRIP
@@ -9,11 +11,23 @@ namespace RoutingRIP
     {
         private Network Network;
         GraphGenerator graphGen = new GraphGenerator();
+        RoutingTableView tableView = new RoutingTableView();
+        private bool Initialize = true;
 
         public GraphView(Network network)
         {
             Network = network;
             InitializeComponent();
+
+            tableView.FormClosing += (sender, e) =>
+            {
+                if (e.CloseReason == CloseReason.UserClosing)
+                {
+                    e.Cancel = true;
+                    ((RoutingTableView)sender).Hide();
+                    BtnTable_Click(sender, e);
+                }
+            };
 
             TxtNode.Text = "Enter node name";
             TxtNode.ForeColor = Color.Gray;
@@ -21,6 +35,24 @@ namespace RoutingRIP
             TxtLinkFrom.ForeColor = Color.Gray;
             TxtLinkTo.Text = "To";
             TxtLinkTo.ForeColor = Color.Gray;
+            TxtTable.Text = "Node name";
+            TxtTable.ForeColor = Color.Gray;
+
+            StartUpdate();
+
+        }
+
+        private void StartUpdate()
+        {
+            new Task(() =>
+            {
+                while(true)
+                {
+                    Network.Update();
+                    Thread.Sleep(2000);
+                }                
+
+            }).Start();
         }
 
         private void UpdateImage(Image image)
@@ -31,10 +63,27 @@ namespace RoutingRIP
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            Network.Update();
+            //if(!Initialize)
+            //    Network.Update();
             using (Image image = Image.FromStream(new MemoryStream(graphGen.GenerateGraph(Network.ToGraphVizString()))))
             {
                 UpdateImage(image);
+            }
+            //if (Initialize)
+            //    Initialize = false;
+        }
+
+        private void GraphUpdated(object sender, EventArgs e)
+        {
+            if (!tableView.Visible)
+                return;
+            try { tableView.Connections = Network.GetRoutingTable(TxtTable.Text); }
+            catch (ArgumentException ex)
+            {
+                TxtTable.Enabled = true;
+                BtnTable.Text = "Show routing table";
+                tableView.Hide();
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -144,6 +193,56 @@ namespace RoutingRIP
                 TxtLinkTo.Text = "To";
                 TxtLinkTo.ForeColor = Color.Gray;
             }
+        }
+
+        private void TxtTable_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (TxtTable.Text == "Node name")
+            {
+                TxtTable.Text = "";
+                TxtTable.ForeColor = Color.Black;
+            }
+        }
+
+        private void TxtTable_Leave(object sender, EventArgs e)
+        {
+            if (TxtTable.Text == "")
+            {
+                TxtTable.Text = "Node name";
+                TxtTable.ForeColor = Color.Gray;
+            }
+        }
+
+        private void BtnTable_Click(object sender, EventArgs e)
+        {
+            if (TxtTable.Text == "Node name")
+            {
+                MessageBox.Show("Enter a node name first.");
+                return;
+            }
+            if (!Network.Exists(TxtTable.Text))
+            {
+                MessageBox.Show("Node with name " + TxtTable.Text + " doesn't exist.");
+                return;
+            }
+
+            if(BtnTable.Text == "Show routing table")
+            {
+                try { tableView.Connections = Network.GetRoutingTable(TxtTable.Text); }
+                catch (ArgumentException ex) { MessageBox.Show(ex.Message); return; }
+
+                TxtTable.Enabled = false;
+                BtnTable.Text = "Hide routing table";
+
+                tableView.Text = TxtTable.Text;           
+                tableView.Show();
+            }
+            else
+            {
+                TxtTable.Enabled = true;
+                BtnTable.Text = "Show routing table";
+                tableView.Hide();
+            }            
         }
 
         private void BtnSend_Click(object sender, EventArgs e)

@@ -36,11 +36,11 @@ namespace RoutingRIP
             }
         }
 
-        public void AddNode(string name)
+        public void AddNode(string nodeName)
         {
-            if (_nodes.Any(x => x.Name == name))
-                throw new ArgumentException("Node with name " + name + " already exists.");
-            _nodes.Add(new NetworkNode(name));
+            if (Exists(nodeName))
+                throw new ArgumentException("Node with name " + nodeName + " already exists.");
+            _nodes.Add(new NetworkNode(nodeName));
         }
 
         public void AddLink(string from, string to)
@@ -77,12 +77,25 @@ namespace RoutingRIP
                 throw new ArgumentException("No link between " + from + " and " + to + ".");
         }
 
-        public void RemoveNode(string name)
+        public void RemoveNode(string nodeName)
         {
-            if (!_nodes.Any(x => x.Name == name))
-                throw new ArgumentException("Node with name " + name + " doesn't exists.");
-            _nodes.Single(x => x.Name == name).ChangeMode(true);
-            _nodes.RemoveAll(x => x.Name == name);
+            if (!Exists(nodeName))
+                throw new ArgumentException("Node with name " + nodeName + " doesn't exist.");
+            _nodes.Single(x => x.Name == nodeName).ChangeMode(true);
+            _nodes.RemoveAll(x => x.Name == nodeName);
+        }
+
+        public List<NetworkNodeConnection> GetRoutingTable(string nodeName)
+        {
+            var node = _nodes.SingleOrDefault(x => x.Name == nodeName);
+            if (node == default(NetworkNode))
+                throw new ArgumentException("There is no node named: " + nodeName);
+            return node.ConnectedNodes;
+        }
+
+        public bool Exists(string nodeName)
+        {
+            return _nodes.Any(x => x.Name == nodeName);
         }
 
         public void SendData(string from, string to, string data)

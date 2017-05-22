@@ -42,6 +42,8 @@ namespace RoutingRIP
             this.LblLink = new System.Windows.Forms.Label();
             this.TxtLinkFrom = new System.Windows.Forms.TextBox();
             this.TxtLinkTo = new System.Windows.Forms.TextBox();
+            this.TxtTable = new System.Windows.Forms.TextBox();
+            this.BtnTable = new System.Windows.Forms.Button();
             this.BtnSend = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.graphImage)).BeginInit();
             this.SuspendLayout();
@@ -63,7 +65,7 @@ namespace RoutingRIP
             this.BtnNext.Name = "BtnNext";
             this.BtnNext.Size = new System.Drawing.Size(233, 70);
             this.BtnNext.TabIndex = 1;
-            this.BtnNext.Text = "NEXT";
+            this.BtnNext.Text = "PAINT";
             this.BtnNext.UseVisualStyleBackColor = true;
             this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
             // 
@@ -162,6 +164,27 @@ namespace RoutingRIP
             this.TxtLinkTo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TxtLinkTo_MouseClick);
             this.TxtLinkTo.Leave += new System.EventHandler(this.TxtLinkTo_Leave);
             // 
+            // TxtTable
+            // 
+            this.TxtTable.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.TxtTable.Location = new System.Drawing.Point(518, 88);
+            this.TxtTable.Name = "TxtTable";
+            this.TxtTable.Size = new System.Drawing.Size(128, 36);
+            this.TxtTable.TabIndex = 3;
+            this.TxtTable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TxtTable_MouseClick);
+            this.TxtTable.Leave += new System.EventHandler(this.TxtTable_Leave);
+            // 
+            // BtnTable
+            // 
+            this.BtnTable.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.BtnTable.Location = new System.Drawing.Point(652, 89);
+            this.BtnTable.Name = "BtnTable";
+            this.BtnTable.Size = new System.Drawing.Size(100, 35);
+            this.BtnTable.TabIndex = 2;
+            this.BtnTable.Text = "Show routing table";
+            this.BtnTable.UseVisualStyleBackColor = true;
+            this.BtnTable.Click += new System.EventHandler(this.BtnTable_Click);
+            // 
             // BtnSend
             // 
             this.BtnSend.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -183,9 +206,11 @@ namespace RoutingRIP
             this.Controls.Add(this.LblLink);
             this.Controls.Add(this.LblNode);
             this.Controls.Add(this.TxtLinkTo);
+            this.Controls.Add(this.TxtTable);
             this.Controls.Add(this.TxtLinkFrom);
             this.Controls.Add(this.TxtNode);
             this.Controls.Add(this.BtnAddNode);
+            this.Controls.Add(this.BtnTable);
             this.Controls.Add(this.BtnAddLink);
             this.Controls.Add(this.BtnDeleteNode);
             this.Controls.Add(this.BtnDeleteLink);
@@ -213,6 +238,8 @@ namespace RoutingRIP
         private System.Windows.Forms.Label LblLink;
         private System.Windows.Forms.TextBox TxtLinkFrom;
         private System.Windows.Forms.TextBox TxtLinkTo;
+        private TextBox TxtTable;
+        private Button BtnTable;
         private Button BtnSend;
     }
 }
