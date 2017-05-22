@@ -64,10 +64,9 @@ namespace RoutingRIP
             this.BtnNext.Name = "BtnNext";
             this.BtnNext.Size = new System.Drawing.Size(233, 70);
             this.BtnNext.TabIndex = 1;
-            this.BtnNext.Text = "NEXT";
+            this.BtnNext.Text = "PAINT";
             this.BtnNext.UseVisualStyleBackColor = true;
             this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
-            this.BtnNext.Click += new System.EventHandler(this.GraphUpdated);
             // 
             // BtnDeleteLink
             // 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RoutingRIP
@@ -35,6 +37,22 @@ namespace RoutingRIP
             TxtLinkTo.ForeColor = Color.Gray;
             TxtTable.Text = "Node name";
             TxtTable.ForeColor = Color.Gray;
+
+            StartUpdate();
+
+        }
+
+        private void StartUpdate()
+        {
+            new Task(() =>
+            {
+                while(true)
+                {
+                    Network.Update();
+                    Thread.Sleep(2000);
+                }                
+
+            }).Start();
         }
 
         private void UpdateImage(Image image)
@@ -45,14 +63,14 @@ namespace RoutingRIP
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            if(!Initialize)
-                Network.Update();
+            //if(!Initialize)
+            //    Network.Update();
             using (Image image = Image.FromStream(new MemoryStream(graphGen.GenerateGraph(Network.ToGraphVizString()))))
             {
                 UpdateImage(image);
             }
-            if (Initialize)
-                Initialize = false;
+            //if (Initialize)
+            //    Initialize = false;
         }
 
         private void GraphUpdated(object sender, EventArgs e)
