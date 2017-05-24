@@ -44,6 +44,7 @@ namespace RoutingRIP
             this.TxtLinkTo = new System.Windows.Forms.TextBox();
             this.TxtTable = new System.Windows.Forms.TextBox();
             this.BtnTable = new System.Windows.Forms.Button();
+            this.BtnSend = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.graphImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -184,6 +185,19 @@ namespace RoutingRIP
             this.BtnTable.UseVisualStyleBackColor = true;
             this.BtnTable.Click += new System.EventHandler(this.BtnTable_Click);
             // 
+            // BtnSend
+            // 
+            this.BtnSend.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.BtnSend.Font = new System.Drawing.Font("Consolas", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.BtnSend.ForeColor = System.Drawing.SystemColors.Control;
+            this.BtnSend.Location = new System.Drawing.Point(519, 130);
+            this.BtnSend.Name = "BtnSend";
+            this.BtnSend.Size = new System.Drawing.Size(233, 70);
+            this.BtnSend.TabIndex = 1;
+            this.BtnSend.Text = "SEND";
+            this.BtnSend.UseVisualStyleBackColor = true;
+            this.BtnSend.Click += new System.EventHandler(this.BtnSend_Click);
+            // 
             // GraphView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,6 +214,7 @@ namespace RoutingRIP
             this.Controls.Add(this.BtnAddLink);
             this.Controls.Add(this.BtnDeleteNode);
             this.Controls.Add(this.BtnDeleteLink);
+            this.Controls.Add(this.BtnSend);
             this.Controls.Add(this.BtnNext);
             this.Controls.Add(this.graphImage);
             this.Name = "GraphView";
@@ -225,5 +240,6 @@ namespace RoutingRIP
         private System.Windows.Forms.TextBox TxtLinkTo;
         private TextBox TxtTable;
         private Button BtnTable;
+        private Button BtnSend;
     }
 }

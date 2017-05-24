@@ -98,6 +98,22 @@ namespace RoutingRIP
             return _nodes.Any(x => x.Name == nodeName);
         }
 
+        public void SendData(string from, string to, string data)
+        {
+            var nodeFrom = _nodes.SingleOrDefault(x => x.Name == from);
+            var nodeTo = _nodes.SingleOrDefault(x => x.Name == to);
+            if (nodeFrom == default(NetworkNode))
+                throw new ArgumentException("There is no node named: " + from);
+            if (nodeTo == default(NetworkNode))
+                throw new ArgumentException("There is no node named: " + to);
+
+            //if (nodeFrom.ConnectedNodes.Any(x => x.To == nodeTo))
+                try { nodeFrom.SendData(nodeTo, data); }
+                catch(InvalidOperationException) { throw; }
+            //else
+            //    throw new InvalidOperationException("Currently there is no path between " + from + " and " + to);
+        }
+
         public void Update()
         {
             foreach (NetworkNode node in _nodes)

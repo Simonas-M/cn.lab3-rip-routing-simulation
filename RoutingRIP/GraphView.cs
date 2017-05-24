@@ -49,7 +49,7 @@ namespace RoutingRIP
                 while(true)
                 {
                     Network.Update();
-                    Thread.Sleep(2000);
+                    Thread.Sleep(5000);
                 }                
 
             }).Start();
@@ -243,6 +243,13 @@ namespace RoutingRIP
                 BtnTable.Text = "Show routing table";
                 tableView.Hide();
             }            
+        }
+
+        private void BtnSend_Click(object sender, EventArgs e)
+        {
+            try { Network.SendData("PC1", "PC3", "Labas!"); }
+            catch (ArgumentException ex) { MessageBox.Show(ex.Message); }
+            catch (InvalidOperationException ex) { MessageBox.Show(ex.Message); }
         }
     }
 }
