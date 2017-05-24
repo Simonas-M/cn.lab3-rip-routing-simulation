@@ -190,7 +190,7 @@ namespace RoutingRIP
             this.BtnSend.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.BtnSend.Font = new System.Drawing.Font("Consolas", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.BtnSend.ForeColor = System.Drawing.SystemColors.Control;
-            this.BtnSend.Location = new System.Drawing.Point(519, 88);
+            this.BtnSend.Location = new System.Drawing.Point(519, 130);
             this.BtnSend.Name = "BtnSend";
             this.BtnSend.Size = new System.Drawing.Size(233, 70);
             this.BtnSend.TabIndex = 1;

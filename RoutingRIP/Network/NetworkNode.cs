@@ -76,6 +76,8 @@ namespace RoutingRIP
 
         public void SendData(NetworkNode nodeTo, string data)
         {
+            if(_isOffline)
+                throw new InvalidOperationException(Name + " is offline data not sent");
             Console.WriteLine(Name + " received data");
             if(nodeTo == this)
                 Console.WriteLine(Name + ": I received data which was sent to me - " + data);

@@ -49,7 +49,7 @@ namespace RoutingRIP
                 while(true)
                 {
                     Network.Update();
-                    Thread.Sleep(2000);
+                    Thread.Sleep(5000);
                 }                
 
             }).Start();
