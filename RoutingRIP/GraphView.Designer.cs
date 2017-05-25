@@ -67,7 +67,7 @@ namespace RoutingRIP
             this.BtnNext.TabIndex = 1;
             this.BtnNext.Text = "PAINT";
             this.BtnNext.UseVisualStyleBackColor = true;
-            this.BtnNext.Click += new System.EventHandler(this.BtnNext_Click);
+            this.BtnNext.Click += new System.EventHandler(this.BtnPaint_Click);
             // 
             // BtnDeleteLink
             // 

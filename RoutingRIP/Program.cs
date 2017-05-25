@@ -4,10 +4,9 @@ namespace RoutingRIP
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            StreamReader fileReader = new StreamReader(@"C:\Users\Simonas\VU_Programu_Sistemos\4.Ketvirtas semestras\Kompiuterių_tinklai\RoutingRIP\Nodes.txt");
+            StreamReader fileReader = new StreamReader(@"..\..\..\Nodes.txt");
             string jsonNodes = fileReader.ReadToEnd();
 
             GraphView form = new GraphView(new Network(jsonNodes));

@@ -28,7 +28,6 @@ namespace RoutingRIP
                     from.ConnectNode(to);
                     to.ConnectNode(from);
                 }
-                Console.WriteLine();
             }
             catch (Exception)
             {
@@ -107,19 +106,14 @@ namespace RoutingRIP
             if (nodeTo == default(NetworkNode))
                 throw new ArgumentException("There is no node named: " + to);
 
-            //if (nodeFrom.ConnectedNodes.Any(x => x.To == nodeTo))
-                try { nodeFrom.SendData(nodeTo, data); }
-                catch(InvalidOperationException) { throw; }
-            //else
-            //    throw new InvalidOperationException("Currently there is no path between " + from + " and " + to);
+            try { nodeFrom.SendData(nodeTo, data); }
+            catch (InvalidOperationException) { throw; }
         }
 
         public void Update()
         {
             foreach (NetworkNode node in _nodes)
-            {
                 node.PingAll();
-            }
         }
 
         public string ToGraphVizString()
@@ -143,7 +137,6 @@ namespace RoutingRIP
                 }
             }
             graphviz.Append('}');
-            //var str = graphviz.ToString();
             return graphviz.ToString();
         }
     }

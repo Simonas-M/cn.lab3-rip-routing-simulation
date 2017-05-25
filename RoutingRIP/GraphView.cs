@@ -12,7 +12,6 @@ namespace RoutingRIP
         private Network Network;
         GraphGenerator graphGen = new GraphGenerator();
         RoutingTableView tableView = new RoutingTableView();
-        private bool Initialize = true;
 
         public GraphView(Network network)
         {
@@ -38,19 +37,19 @@ namespace RoutingRIP
             TxtTable.Text = "Node name";
             TxtTable.ForeColor = Color.Gray;
 
-            StartUpdate();
+            StartUpdateThread();
 
         }
 
-        private void StartUpdate()
+        private void StartUpdateThread()
         {
             new Task(() =>
             {
-                while(true)
+                while (true)
                 {
                     Network.Update();
                     Thread.Sleep(5000);
-                }                
+                }
 
             }).Start();
         }
@@ -61,16 +60,12 @@ namespace RoutingRIP
             graphImage.Refresh();
         }
 
-        private void BtnNext_Click(object sender, EventArgs e)
+        private void BtnPaint_Click(object sender, EventArgs e)
         {
-            //if(!Initialize)
-            //    Network.Update();
             using (Image image = Image.FromStream(new MemoryStream(graphGen.GenerateGraph(Network.ToGraphVizString()))))
             {
                 UpdateImage(image);
             }
-            //if (Initialize)
-            //    Initialize = false;
         }
 
         private void GraphUpdated(object sender, EventArgs e)
@@ -226,7 +221,7 @@ namespace RoutingRIP
                 return;
             }
 
-            if(BtnTable.Text == "Show routing table")
+            if (BtnTable.Text == "Show routing table")
             {
                 try { tableView.Connections = Network.GetRoutingTable(TxtTable.Text); }
                 catch (ArgumentException ex) { MessageBox.Show(ex.Message); return; }
@@ -234,7 +229,7 @@ namespace RoutingRIP
                 TxtTable.Enabled = false;
                 BtnTable.Text = "Hide routing table";
 
-                tableView.Text = TxtTable.Text;           
+                tableView.Text = TxtTable.Text;
                 tableView.Show();
             }
             else
@@ -242,7 +237,7 @@ namespace RoutingRIP
                 TxtTable.Enabled = true;
                 BtnTable.Text = "Show routing table";
                 tableView.Hide();
-            }            
+            }
         }
 
         private void BtnSend_Click(object sender, EventArgs e)
